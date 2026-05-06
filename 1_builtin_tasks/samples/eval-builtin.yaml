@@ -1,0 +1,50 @@
+apiVersion: trustyai.opendatahub.io/v1alpha1
+kind: LMEvalJob
+metadata:
+  name: eval-kmmlu-direct-law        # <CHANGE_ME>
+spec:
+  allowOnline: true
+  model: local-completions
+
+  modelArgs:
+    - name: base_url
+      value: "https://<MODEL_NAME>-predictor.<NAMESPACE>.svc.cluster.local:8443/v1/completions"  # <CHANGE_ME>
+    - name: model
+      value: "<MODEL_NAME>"           # <CHANGE_ME> InferenceService name
+    - name: tokenizer
+      value: "google/gemma-2b"        # <CHANGE_ME> HF tokenizer ID
+    - name: verify_certificate
+      value: "False"
+    - name: num_concurrent
+      value: "1"
+    - name: max_retries
+      value: "3"
+    - name: tokenized_requests
+      value: "false"
+
+  taskList:
+    taskNames:
+      - kmmlu_direct_law              # <CHANGE_ME> see available tasks below
+      # Available Korean tasks:
+      # - kmmlu_direct_law   (Tier 1)
+      # - kmmlu_hard_law     (Tier 2)
+      # - kobest_wic         (Tier 2)
+      # - haerae_history     (Tier 2)
+      # - hrm8k_ksm          (Tier 2)
+
+  logSamples: true
+  limit: "5"                          # Remove or increase for full evaluation
+
+  pod:
+    container:
+      env:
+        - name: HF_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hf-token
+              key: HF_TOKEN
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: lmeval-sa-token
+              key: token
