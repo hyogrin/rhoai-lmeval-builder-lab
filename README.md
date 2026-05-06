@@ -1,4 +1,4 @@
-# Rad Hap LMEval Builder Lab
+# RHOAI LMEval Builder Lab
 
 A hands-on workshop for running **Korean language evaluation benchmarks** on **Red Hat OpenShift AI** using the TrustyAI `LMEvalJob` Custom Resource. This lab guides you through evaluating open-weight LLMs on datasets like KMMLU, CLIcK, KoBEST, and HAE-RAE directly from your OpenShift AI environment.
 
