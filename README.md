@@ -77,18 +77,26 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
    cd lm-eval-builder-lab
    ```
 
-2. Copy and fill in environment variables:
+2. Install dependencies with [uv](https://docs.astral.sh/uv/):
+   ```bash
+   uv sync
+   source .venv/bin/activate
+   ```
+
+3. Copy and fill in environment variables:
    ```bash
    cp sample.env .env
    # Edit .env with your values
    ```
 
-3. Run notebooks in order:
+4. Run notebooks in order:
    - `0_setup/0_model_deploy.ipynb` — Deploy Gemma 4 model (skip if already deployed)
    - `0_setup/1_setup.ipynb` — One-time RBAC and secrets setup
    - `1_builtin_tasks/1_builtin_task_eval.ipynb` — Quick eval with built-in tasks
    - `2_custom_tasks/1_custom_task_eval.ipynb` — Full eval with any task from Git
    - `3_benchmark/1_benchmark_analysis.ipynb` — Analyze results and generate reports
+
+> **Note:** `uv sync` creates a `.venv` virtual environment and installs all dependencies defined in `pyproject.toml`. To run scripts directly, use `uv run python <script>` or activate the venv with `source .venv/bin/activate`.
 
 ## Phase Comparison
 

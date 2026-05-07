@@ -1,0 +1,11 @@
+[project]
+name = "rh-lmeval-builder-lab"
+version = "0.1.0"
+description = "Korean LLM evaluation workshop using TrustyAI LMEvalJob on OpenShift AI"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas",
+    "jupyter",
+    "ipykernel",
+    "python-dotenv",
+]
