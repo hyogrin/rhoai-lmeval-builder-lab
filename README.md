@@ -7,17 +7,19 @@ A hands-on workshop for running **Korean language evaluation benchmarks** on **R
 ```mermaid
 flowchart LR
     User[User / Workbench] -->|oc apply| CRD[LMEvalJob CR]
+    User -->|SDK / REST| EvalHub[EvalHub Service]
     CRD --> Operator[TrustyAI Operator]
+    EvalHub --> Operator
     Operator --> Pod[lm-eval Pod]
     Pod -->|API call| vLLM[vLLM InferenceService]
     Pod -->|download| HF[HuggingFace Datasets]
+    EvalHub -->|tracking| MLflow[MLflow]
 ```
 
 **How it works:**
-1. You submit an `LMEvalJob` YAML to OpenShift
-2. The TrustyAI Operator creates a Pod running [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness)
-3. The Pod downloads the evaluation dataset and sends inference requests to your deployed model
-4. Results are collected and stored in the Pod logs / output
+
+- **LMEvalJob (Phase 1–3):** Submit an `LMEvalJob` YAML directly to OpenShift. The TrustyAI Operator creates a Pod running [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) that downloads datasets and sends inference requests to your model.
+- **EvalHub (Phase 4):** Use the [EvalHub](https://github.com/eval-hub/eval-hub) REST API / Python SDK to orchestrate evaluations across multiple frameworks (lm-eval, RAGAS, LightEval, GuideLLM, etc.) with built-in **MLflow** experiment tracking.
 
 ## Model
 
@@ -28,7 +30,8 @@ This workshop uses **Gemma 4 (E2B-it)** deployed on OpenShift AI via a custom vL
 ### 0. Setup
 
 - **0_setup/0_model_deploy.ipynb**: Deploy a Gemma 4 model using a custom vLLM ServingRuntime with NVIDIA GPU support.
-- **0_setup/1_setup.ipynb**: Configure RBAC permissions, create secrets (HF token, SA token for OAuth), and verify cluster access.
+- **0_setup/1_LMEval_setup.ipynb**: Configure RBAC permissions, create secrets (HF token, SA token for OAuth), and verify cluster access for LMEvalJob.
+- **0_setup/2_eval_hub_setup.ipynb**: Deploy the EvalHub service and MLflow on OpenShift, install the eval-hub-sdk, and verify connectivity.
 
 ### 1. Built-in Tasks (Phase 1)
 
@@ -38,10 +41,14 @@ This workshop uses **Gemma 4 (E2B-it)** deployed on OpenShift AI via a custom vL
 
 - **2_custom_tasks/1_custom_task_eval.ipynb**: Run evaluations using `customTasks` with a Git source — pull any task from the lm-evaluation-harness repository for full flexibility.
 
-### 3. Benchmark Analysis (Phase 3)
+### 3. LMEvalJob Benchmark (Phase 3)
 
-- **3_benchmark/1_benchmark_analysis.ipynb**: Analyze and compare evaluation results across models. Load results from JSON, aggregate by category/supercategory, and export to Markdown.
-- **3_benchmark/generate_report.py**: Generate a standalone HTML report with interactive charts and comparison tables from evaluation result logs.
+- **3_lmeval_job_benchmark/1_lmeval_benchmark.ipynb**: Analyze and compare LMEvalJob evaluation results across models. Load results from JSON, aggregate by category/supercategory, and export to Markdown.
+- **3_lmeval_job_benchmark/generate_report.py**: Generate a standalone HTML report with interactive charts and comparison tables from evaluation result logs.
+
+### 4. EvalHub Benchmark (Phase 4)
+
+- **4_eval_hub_benchmark/1_eval_hub_benchmark.ipynb**: Run evaluations through the EvalHub REST API using the Python SDK. Supports multi-benchmark jobs, automatic MLflow tracking, and centralized result management.
 
 ## Korean Benchmark Datasets
 
@@ -68,6 +75,7 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 - `oc` CLI access to the cluster
 - A Hugging Face account with access to gated models/tokenizers (e.g., `google/gemma-2b`)
 - Hugging Face API token
+- (Phase 4) EvalHub service and MLflow deployed on the cluster
 
 ## Quick Start
 
@@ -91,22 +99,25 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 
 4. Run notebooks in order:
    - `0_setup/0_model_deploy.ipynb` — Deploy Gemma 4 model (skip if already deployed)
-   - `0_setup/1_setup.ipynb` — One-time RBAC and secrets setup
+   - `0_setup/1_LMEval_setup.ipynb` — One-time RBAC and secrets setup for LMEvalJob
+   - `0_setup/2_eval_hub_setup.ipynb` — Deploy EvalHub + MLflow (for Phase 4)
    - `1_builtin_tasks/1_builtin_task_eval.ipynb` — Quick eval with built-in tasks
    - `2_custom_tasks/1_custom_task_eval.ipynb` — Full eval with any task from Git
-   - `3_benchmark/1_benchmark_analysis.ipynb` — Analyze results and generate reports
+   - `3_lmeval_job_benchmark/1_lmeval_benchmark.ipynb` — Analyze LMEvalJob results and generate reports
+   - `4_eval_hub_benchmark/1_eval_hub_benchmark.ipynb` — Run evaluations via EvalHub SDK with MLflow tracking
 
 > **Note:** `uv sync` creates a `.venv` virtual environment and installs all dependencies defined in `pyproject.toml`. To run scripts directly, use `uv run python <script>` or activate the venv with `source .venv/bin/activate`.
 
 ## Phase Comparison
 
-| | Phase 1: Built-in Tasks | Phase 2: Custom Tasks (Git) | Phase 3: Benchmark Analysis |
-|---|---|---|---|
-| **Approach** | `taskList.taskNames` | `taskList.customTasks.source.git` + `taskNames` | Post-processing result JSONs |
-| **Task Source** | TrustyAI built-in (Tier 1/2) | Any task from lm-evaluation-harness | N/A (consumes results) |
-| **Available Korean Tasks** | kmmlu_direct_law, kobest_wic, haerae_history, etc. | Full kmmlu (45 subjects), click (11 categories), kobest, etc. | All tasks from Phase 1 & 2 |
-| **Setup Complexity** | Minimal | Requires git URL + path | Requires result JSON files |
-| **Best For** | Quick smoke tests, CI/CD | Full benchmark suites, custom evaluations | Visualization, reporting, comparison |
+| | Phase 1: Built-in Tasks | Phase 2: Custom Tasks (Git) | Phase 3: LMEvalJob Benchmark | Phase 4: EvalHub Benchmark |
+|---|---|---|---|---|
+| **Approach** | `taskList.taskNames` | `taskList.customTasks.source.git` + `taskNames` | Post-processing result JSONs | EvalHub SDK / REST API |
+| **Task Source** | TrustyAI built-in (Tier 1/2) | Any task from lm-evaluation-harness | N/A (consumes results) | Multiple frameworks (lm-eval, RAGAS, etc.) |
+| **Available Korean Tasks** | kmmlu_direct_law, kobest_wic, haerae_history, etc. | Full kmmlu (45 subjects), click (11 categories), kobest, etc. | All tasks from Phase 1 & 2 | All tasks + multi-framework support |
+| **Setup Complexity** | Minimal | Requires git URL + path | Requires result JSON files | Requires EvalHub + MLflow deployment |
+| **Experiment Tracking** | Manual (Pod logs) | Manual (Pod logs) | Manual (JSON export) | Built-in MLflow integration |
+| **Best For** | Quick smoke tests, CI/CD | Full benchmark suites, custom evaluations | Visualization, reporting, comparison | Production workflows, multi-framework eval |
 
 ## About
 
