@@ -1,0 +1,9 @@
+apiVersion: trustyai.opendatahub.io/v1alpha1
+kind: EvalHub
+metadata:
+  name: evalhub
+spec:
+  replicas: 1
+  env:
+    - name: MLFLOW_TRACKING_URI
+      value: "http://mlflow.<namespace>.svc.cluster.local:5000"
