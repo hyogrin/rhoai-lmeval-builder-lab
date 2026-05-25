@@ -1,0 +1,194 @@
+# Korean LM Evaluation Harness — custom provider definition
+#
+# Registers Korean-language benchmarks that ship with lm-evaluation-harness
+# but are NOT included in the default EvalHub provider catalog.
+#
+# Format follows eval-hub-contrib provider.yaml conventions:
+#   https://github.com/eval-hub/eval-hub-contrib/blob/main/CONTRIBUTING.md
+#
+# Usage:
+#   This file is loaded by the notebook (0_setup/2_eval_hub_setup.ipynb)
+#   and registered via the EvalHub REST API at startup.
+
+id: korean_lm_eval
+name: Korean LM Evaluation Harness
+description: >
+  Korean-language benchmarks from EleutherAI lm-evaluation-harness.
+  Reuses the same runtime image as the built-in lm_evaluation_harness provider.
+
+runtime:
+  k8s:
+    image: registry.redhat.io/rhoai/odh-ta-lmes-job-rhel9@sha256:3c208c31b41160f6c78f2e3a4dd95103947d0a98cae7742e57aab103d677961c
+    entrypoint:
+      - /opt/app-root/bin/python
+      - /opt/app-root/src/main.py
+    cpu_request: 100m
+    memory_request: 128Mi
+    cpu_limit: 500m
+    memory_limit: 4Gi
+
+benchmarks:
+  # ── KMMLU (Korean MMLU) ─────────────────────────────────────
+  - id: kmmlu
+    name: Korean MMLU
+    description: >
+      Korean Massive Multitask Language Understanding — 45 subjects
+      covering STEM, humanities, social sciences, and more.
+    category: knowledge
+    metrics: [acc]
+    num_few_shot: 5
+    tags: [korean, knowledge, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.25
+
+  - id: kmmlu_direct
+    name: Korean MMLU (Direct, 0-shot)
+    description: Korean MMLU with direct prompting across all 45 subjects.
+    category: knowledge
+    metrics: [acc]
+    num_few_shot: 0
+    tags: [korean, knowledge, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.25
+
+  - id: kmmlu_direct_law
+    name: Korean MMLU — Law (Direct)
+    description: Korean MMLU Law subject with direct (0-shot) prompting.
+    category: knowledge
+    metrics: [acc]
+    num_few_shot: 0
+    tags: [korean, knowledge, law, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.25
+
+  # ── KoBEST ──────────────────────────────────────────────────
+  - id: kobest_boolq
+    name: KoBEST BoolQ
+    description: Korean boolean question answering.
+    category: reasoning
+    metrics: [acc]
+    num_few_shot: 5
+    tags: [korean, reasoning, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.50
+
+  - id: kobest_copa
+    name: KoBEST COPA
+    description: Korean Choice of Plausible Alternatives — causal reasoning.
+    category: reasoning
+    metrics: [acc]
+    num_few_shot: 5
+    tags: [korean, reasoning, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.50
+
+  - id: kobest_hellaswag
+    name: KoBEST HellaSwag
+    description: Korean commonsense reasoning for sentence completion.
+    category: reasoning
+    metrics: [acc, acc_norm]
+    num_few_shot: 5
+    tags: [korean, reasoning, lm_eval]
+    primary_score:
+      metric: acc_norm
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.25
+
+  - id: kobest_sentineg
+    name: KoBEST SentiNeg
+    description: Korean sentiment negation understanding.
+    category: general
+    metrics: [acc]
+    num_few_shot: 5
+    tags: [korean, general, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.50
+
+  - id: kobest_wic
+    name: KoBEST WiC
+    description: Korean Word-in-Context — word sense disambiguation.
+    category: general
+    metrics: [acc]
+    num_few_shot: 5
+    tags: [korean, general, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.50
+
+  # ── Other Korean benchmarks ─────────────────────────────────
+  - id: haerae
+    name: HAE-RAE Bench
+    description: >
+      Korean language understanding — vocabulary, reading comprehension,
+      and cultural knowledge.
+    category: knowledge
+    metrics: [acc]
+    num_few_shot: 5
+    tags: [korean, knowledge, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.25
+
+  - id: click
+    name: CLIcK
+    description: >
+      Cultural and Linguistic Intelligence in Korean — 1,995 QA pairs
+      sourced from official Korean exams and textbooks.
+    category: knowledge
+    metrics: [acc]
+    num_few_shot: 5
+    tags: [korean, knowledge, culture, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.25
+
+  - id: kormedmcqa
+    name: KorMedMCQA
+    description: Korean medical multiple-choice question answering.
+    category: knowledge
+    metrics: [acc]
+    num_few_shot: 0
+    tags: [korean, knowledge, medical, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.25
+
+  - id: kbl
+    name: KBL
+    description: Korean Benchmark for Legal Language Understanding.
+    category: knowledge
+    metrics: [acc]
+    num_few_shot: 0
+    tags: [korean, knowledge, law, lm_eval]
+    primary_score:
+      metric: acc
+      lower_is_better: false
+    pass_criteria:
+      threshold: 0.25
