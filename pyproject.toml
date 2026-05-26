@@ -5,6 +5,7 @@ description = "Korean LLM evaluation workshop using TrustyAI LMEvalJob on OpenSh
 requires-python = ">=3.12"
 dependencies = [
     "pandas",
+    "tabulate",
     "jupyter",
     "ipykernel",
     "python-dotenv",

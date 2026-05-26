@@ -1,0 +1,16 @@
+# Korean MCQ adapter requirements
+
+# HTTP client for vLLM API calls
+httpx>=0.27
+
+# HuggingFace datasets
+datasets>=2.19
+
+# EvalHub SDK (adapter framework)
+eval-hub-sdk[adapter]>=0.1.7
+
+# Data processing
+pandas>=2.1
+
+# Pydantic (required by evalhub-sdk)
+pydantic>=2.5

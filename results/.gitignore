@@ -1,0 +1,5 @@
+# Ignore evaluation result CSVs (regenerated per evaluation run)
+*.csv
+
+# Keep the generated markdown report
+!RESULTS.md
