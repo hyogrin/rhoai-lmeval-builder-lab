@@ -71,15 +71,14 @@ We evaluated **Gemma 4 (E2B-it)** on 5 Korean benchmarks using the custom `korea
 | KMMLU-HARD (0-shot) | 23.70% | 2,000 |
 | KoBEST BoolQ | 85.90% | 1,404 |
 
-<details>
-<summary>CLIcK — Accuracy by supercategory</summary>
+CLIcK — Accuracy by supercategory
 
 | supercategory | gemma4-e2b |
 |:---|---:|
 | Culture | 57.76 |
 | Language | 52.16 |
 
-</details>
+
 
 <details>
 <summary>CLIcK — Accuracy by category</summary>
@@ -100,8 +99,7 @@ We evaluated **Gemma 4 (E2B-it)** on 5 Korean benchmarks using the custom `korea
 
 </details>
 
-<details>
-<summary>HAE-RAE — Accuracy by category</summary>
+HAE-RAE — Accuracy by category
 
 | category | gemma4-e2b |
 |:---|---:|
@@ -114,17 +112,16 @@ We evaluated **Gemma 4 (E2B-it)** on 5 Korean benchmarks using the custom `korea
 | history | 55.85 |
 | loan_words | 83.93 |
 
-</details>
 
-<details>
-<summary>KMMLU — Accuracy by supercategory</summary>
+
+KMMLU — Accuracy by supercategory
 
 | supercategory | gemma4-e2b |
 |:---|---:|
 | HUMSS | 31.00 |
 | Other | 36.74 |
 
-</details>
+
 
 <details>
 <summary>KMMLU — Accuracy by category</summary>
@@ -137,14 +134,13 @@ We evaluated **Gemma 4 (E2B-it)** on 5 Korean benchmarks using the custom `korea
 
 </details>
 
-<details>
-<summary>KMMLU-HARD — Accuracy by supercategory</summary>
+KMMLU-HARD — Accuracy by supercategory
 
 | supercategory | gemma4-e2b |
 |:---|---:|
 | Other | 23.70 |
 
-</details>
+
 
 <details>
 <summary>KMMLU-HARD — Accuracy by category</summary>
@@ -177,14 +173,13 @@ We evaluated **Gemma 4 (E2B-it)** on 5 Korean benchmarks using the custom `korea
 
 </details>
 
-<details>
-<summary>KoBEST BoolQ — Accuracy by category</summary>
+KoBEST BoolQ — Accuracy by category
 
 | category | gemma4-e2b |
 |:---|---:|
 | unknown | 85.90 |
 
-</details>
+
 
 Accumulated benchmark results across major open-weight models are maintained at:
 
