@@ -63,6 +63,8 @@ This workshop uses **Gemma 4 (E2B-it)** deployed on OpenShift AI via a custom vL
 
 We evaluated **Gemma 4 (E2B-it)** on 5 Korean benchmarks using the custom `korean-mcq` EvalHub adapter with up to 2,000 samples per dataset. Evaluations were orchestrated via EvalHub SDK, with results tracked in MLflow.
 
+![evaluation result on MLflow](./images/eval-result-mlflow.png)
+
 | Benchmark | Accuracy | Samples |
 |:----------|-------:|-------:|
 | CLIcK | 56.11% | 1,995 |
