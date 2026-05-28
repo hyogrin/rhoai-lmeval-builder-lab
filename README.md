@@ -71,117 +71,6 @@ We evaluated **Gemma 4 (E2B-it)** on 5 Korean benchmarks using the custom `korea
 | KMMLU-HARD (0-shot) | 23.70% | 2,000 |
 | KoBEST BoolQ | 85.90% | 1,404 |
 
-### Evaluation Results in Detail
-
-CLIcK — Accuracy by supercategory
-
-| supercategory | gemma4-e2b |
-|:---|---:|
-| Culture | 57.76 |
-| Language | 52.16 |
-
-
-
-<details>
-<summary>CLIcK — Accuracy by category</summary>
-
-| category | gemma4-e2b |
-|:---|---:|
-| Economy | 72.88 |
-| Functional | 58.57 |
-| Geography | 65.55 |
-| Grammar | 31.67 |
-| History | 34.29 |
-| Law | 44.75 |
-| Politics | 67.86 |
-| Pop Culture | 68.29 |
-| Society | 71.52 |
-| Textual | 67.55 |
-| Tradition | 67.12 |
-
-</details>
-
-HAE-RAE — Accuracy by category
-
-| category | gemma4-e2b |
-|:---|---:|
-| correct_definition_matching | 59.40 |
-| csat_geo | 53.85 |
-| csat_law | 21.74 |
-| csat_socio | 31.58 |
-| date_understanding | 39.29 |
-| general_knowledge | 39.87 |
-| history | 55.85 |
-| loan_words | 83.93 |
-
-
-
-KMMLU — Accuracy by supercategory
-
-| supercategory | gemma4-e2b |
-|:---|---:|
-| HUMSS | 31.00 |
-| Other | 36.74 |
-
-
-
-<details>
-<summary>KMMLU — Accuracy by category</summary>
-
-| category | gemma4-e2b |
-|:---|---:|
-| Accounting | 31.00 |
-| Agricultural Sciences | 33.80 |
-| Aviation Engineering and Maintenance | 40.00 |
-
-</details>
-
-KMMLU-HARD — Accuracy by supercategory
-
-| supercategory | gemma4-e2b |
-|:---|---:|
-| Other | 23.70 |
-
-
-
-<details>
-<summary>KMMLU-HARD — Accuracy by category</summary>
-
-| category | gemma4-e2b |
-|:---|---:|
-| accounting | 15.22 |
-| biology | 14.00 |
-| chemistry | 34.00 |
-| computer_science | 29.00 |
-| criminal_law | 26.00 |
-| ecology | 28.00 |
-| electrical_engineering | 22.00 |
-| electronics_engineering | 22.00 |
-| gas_technology_and_engineering | 25.00 |
-| geomatics | 30.00 |
-| health | 34.78 |
-| information_technology | 23.00 |
-| korean_history | 9.09 |
-| machine_design_and_manufacturing | 17.39 |
-| management | 20.00 |
-| maritime_engineering | 16.00 |
-| materials_engineering | 27.00 |
-| math | 20.00 |
-| nondestructive_testing | 27.00 |
-| patent | 23.53 |
-| political_science_and_sociology | 25.56 |
-| public_safety | 29.00 |
-| railway_and_automotive_engineering | 20.00 |
-
-</details>
-
-KoBEST BoolQ — Accuracy by category
-
-| category | gemma4-e2b |
-|:---|---:|
-| unknown | 85.90 |
-
-
 
 Accumulated benchmark results across major open-weight models are maintained at:
 
@@ -239,6 +128,109 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 | **Setup Complexity** | Minimal | Requires git URL + path | Requires result JSON files | Requires EvalHub + MLflow deployment |
 | **Experiment Tracking** | Manual (Pod logs) | Manual (Pod logs) | Manual (JSON export) | Built-in MLflow integration |
 | **Best For** | Quick smoke tests, CI/CD | Full benchmark suites, custom evaluations | Visualization, reporting, comparison | Production workflows, multi-framework eval |
+
+## Detailed Evaluation Results
+
+CLIcK — Accuracy by supercategory
+
+| supercategory | gemma4-e2b |
+|:---|---:|
+| Culture | 57.76 |
+| Language | 52.16 |
+
+
+
+CLIcK — Accuracy by category
+
+| category | gemma4-e2b |
+|:---|---:|
+| Economy | 72.88 |
+| Functional | 58.57 |
+| Geography | 65.55 |
+| Grammar | 31.67 |
+| History | 34.29 |
+| Law | 44.75 |
+| Politics | 67.86 |
+| Pop Culture | 68.29 |
+| Society | 71.52 |
+| Textual | 67.55 |
+| Tradition | 67.12 |
+
+
+
+HAE-RAE — Accuracy by category
+
+| category | gemma4-e2b |
+|:---|---:|
+| correct_definition_matching | 59.40 |
+| csat_geo | 53.85 |
+| csat_law | 21.74 |
+| csat_socio | 31.58 |
+| date_understanding | 39.29 |
+| general_knowledge | 39.87 |
+| history | 55.85 |
+| loan_words | 83.93 |
+
+
+
+KMMLU — Accuracy by supercategory
+
+| supercategory | gemma4-e2b |
+|:---|---:|
+| HUMSS | 31.00 |
+| Other | 36.74 |
+
+KMMLU — Accuracy by category
+
+| category | gemma4-e2b |
+|:---|---:|
+| Accounting | 31.00 |
+| Agricultural Sciences | 33.80 |
+| Aviation Engineering and Maintenance | 40.00 |
+
+
+
+KMMLU-HARD — Accuracy by supercategory
+
+| supercategory | gemma4-e2b |
+|:---|---:|
+| Other | 23.70 |
+
+KMMLU-HARD — Accuracy by category
+
+| category | gemma4-e2b |
+|:---|---:|
+| accounting | 15.22 |
+| biology | 14.00 |
+| chemistry | 34.00 |
+| computer_science | 29.00 |
+| criminal_law | 26.00 |
+| ecology | 28.00 |
+| electrical_engineering | 22.00 |
+| electronics_engineering | 22.00 |
+| gas_technology_and_engineering | 25.00 |
+| geomatics | 30.00 |
+| health | 34.78 |
+| information_technology | 23.00 |
+| korean_history | 9.09 |
+| machine_design_and_manufacturing | 17.39 |
+| management | 20.00 |
+| maritime_engineering | 16.00 |
+| materials_engineering | 27.00 |
+| math | 20.00 |
+| nondestructive_testing | 27.00 |
+| patent | 23.53 |
+| political_science_and_sociology | 25.56 |
+| public_safety | 29.00 |
+| railway_and_automotive_engineering | 20.00 |
+
+
+KoBEST BoolQ — Accuracy by category
+
+| category | gemma4-e2b |
+|:---|---:|
+| unknown | 85.90 |
+
 
 ## About
 
