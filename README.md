@@ -71,6 +71,8 @@ We evaluated **Gemma 4 (E2B-it)** on 5 Korean benchmarks using the custom `korea
 | KMMLU-HARD (0-shot) | 23.70% | 2,000 |
 | KoBEST BoolQ | 85.90% | 1,404 |
 
+### Evaluation Results in Detail
+
 CLIcK — Accuracy by supercategory
 
 | supercategory | gemma4-e2b |
