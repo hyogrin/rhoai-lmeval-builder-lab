@@ -14,3 +14,6 @@ pandas>=2.1
 
 # Pydantic (required by evalhub-sdk)
 pydantic>=2.5
+
+# MLflow (for trace/artifact logging)
+mlflow>=2.14

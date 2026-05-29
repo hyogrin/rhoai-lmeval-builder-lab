@@ -27,6 +27,14 @@ runtime:
     env:
       - name: PYTHONUNBUFFERED
         value: "1"
+      - name: DISABLE_THINKING
+        value: "true"
+      # MLflow Tracing: connect directly to MLflow server (bypasses EvalHub proxy)
+      # Each LLM call is logged as a trace span in MLflow's Traces tab
+      - name: MLFLOW_DIRECT_URI
+        value: "https://mlflow.redhat-ods-applications.svc:8443"
+      - name: MLFLOW_TRACKING_INSECURE_TLS
+        value: "true"
 
 benchmarks:
   - id: click

@@ -58,6 +58,10 @@ class KoreanMCQAdapter(FrameworkAdapter):
         benchmark_id = config.benchmark_id
         logger.info(f"Starting Korean MCQ job {config.id} for benchmark {benchmark_id}")
 
+        # Initialize tracing
+        self._trace_enabled = os.getenv("ENABLE_TRACING", "true").lower() == "true"
+        self._trace_records: list[dict] = []
+
         try:
             # Phase 1: Initialize
             callbacks.report_status(
@@ -411,6 +415,7 @@ class KoreanMCQAdapter(FrameworkAdapter):
 
         async with httpx.AsyncClient(
             base_url=base_url,
+            verify=False,
             timeout=httpx.Timeout(connect=10.0, read=120.0, write=10.0, pool=30.0),
             limits=httpx.Limits(
                 max_connections=concurrency + 5,
@@ -436,21 +441,36 @@ class KoreanMCQAdapter(FrameworkAdapter):
         and connection errors with exponential backoff + jitter.
         """
         max_retries = 5
+        request_payload = {
+            "model": model_name,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+        }
+        if os.getenv("DISABLE_THINKING", "true").lower() == "true":
+            request_payload["chat_template_kwargs"] = {"enable_thinking": False}
 
         for attempt in range(max_retries):
             try:
                 response = await client.post(
                     "/v1/chat/completions",
-                    json={
-                        "model": model_name,
-                        "messages": [{"role": "user", "content": prompt}],
-                        "temperature": temperature,
-                        "max_tokens": max_tokens,
-                    },
+                    json=request_payload,
                 )
                 response.raise_for_status()
                 data = response.json()
-                return data["choices"][0]["message"]["content"].strip()
+                content = data["choices"][0]["message"]["content"].strip()
+
+                if self._trace_enabled:
+                    self._trace_records.append({
+                        "prompt": prompt[:500],
+                        "response": content,
+                        "model": model_name,
+                        "temperature": temperature,
+                        "max_tokens": max_tokens,
+                        "status": "success",
+                    })
+
+                return content
 
             except httpx.HTTPStatusError as e:
                 status_code = e.response.status_code
@@ -758,6 +778,62 @@ def main() -> None:
         if run_id:
             results.mlflow_run_id = run_id
             logger.info(f"MLflow run: {run_id}")
+
+        # Log traces directly to MLflow Traces tab (bypassing EvalHub proxy)
+        mlflow_direct_uri = os.getenv("MLFLOW_DIRECT_URI", "https://mlflow.redhat-ods-applications.svc:8443")
+        if adapter._trace_enabled and adapter._trace_records and run_id:
+            try:
+                import mlflow
+                from mlflow import MlflowClient
+                import urllib3
+                urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+                os.environ.pop("MLFLOW_TRACKING_SERVER_CERT_PATH", None)
+                os.environ["MLFLOW_TRACKING_URI"] = mlflow_direct_uri
+                os.environ["MLFLOW_TRACKING_INSECURE_TLS"] = "true"
+
+                sa_token_path = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+                if Path(sa_token_path).exists():
+                    sa_token = Path(sa_token_path).read_text().strip()
+                    os.environ["MLFLOW_TRACKING_TOKEN"] = sa_token
+
+                mlflow.set_tracking_uri(mlflow_direct_uri)
+                mlflow_client = MlflowClient(tracking_uri=mlflow_direct_uri)
+                logger.info(f"Logging {len(adapter._trace_records)} traces to MLflow at {mlflow_direct_uri}")
+
+                exp_id = mlflow_client.get_run(run_id).info.experiment_id
+                mlflow.set_experiment(experiment_id=exp_id)
+
+                logged_count = 0
+                for i, record in enumerate(adapter._trace_records):
+                    try:
+                        root_span = mlflow_client.start_trace(
+                            name=f"llm_call_{i}",
+                            experiment_id=exp_id,
+                            inputs={"prompt": record["prompt"], "model": record["model"]},
+                            attributes={
+                                "temperature": str(record["temperature"]),
+                                "max_tokens": str(record["max_tokens"]),
+                            },
+                        )
+                        trace_id = root_span.request_id
+                        mlflow_client.end_trace(
+                            trace_id=trace_id,
+                            outputs={"response": record["response"]},
+                            attributes={"status": record["status"]},
+                        )
+                        logged_count += 1
+                    except Exception as e:
+                        if i == 0:
+                            logger.warning(f"Trace logging failed on first record: {e}")
+                            break
+                        continue
+
+                logger.info(f"Logged {logged_count}/{len(adapter._trace_records)} traces to MLflow Traces tab")
+            except Exception as e:
+                logger.warning(f"Failed to connect to MLflow for tracing: {e}")
+                import traceback
+                logger.warning(traceback.format_exc())
 
         callbacks.report_results(results)
         sys.exit(0)
