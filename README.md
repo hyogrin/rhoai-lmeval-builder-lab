@@ -135,18 +135,14 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 
 ## Detailed Evaluation Results
 
-<details>
-<summary>CLIcK — Accuracy by supercategory</summary>
+### CLIcK — Accuracy by supercategory
 
 | supercategory | gemma4-e2b | qwen3-4b |
 |:---|---:|---:|
 | Culture | 57.76 | 56.19 |
 | Language | 52.16 | 57.69 |
 
-</details>
-
-<details>
-<summary>CLIcK — Accuracy by category</summary>
+### CLIcK — Accuracy by category
 
 | category | gemma4-e2b | qwen3-4b |
 |:---|---:|---:|
@@ -162,10 +158,7 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 | Textual | 67.55 | 75.46 |
 | Tradition | 67.12 | 59.01 |
 
-</details>
-
-<details>
-<summary>HAE-RAE — Accuracy by category</summary>
+### HAE-RAE — Accuracy by category
 
 | category | gemma4-e2b | qwen3-4b |
 |:---|---:|---:|
@@ -178,20 +171,14 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 | history | 55.85 | 36.52 |
 | loan_words | 83.93 | 78.57 |
 
-</details>
-
-<details>
-<summary>KMMLU — Accuracy by supercategory</summary>
+### KMMLU — Accuracy by supercategory
 
 | supercategory | gemma4-e2b | qwen3-4b |
 |:---|---:|---:|
 | HUMSS | 31.00 | 45.00 |
 | Other | 36.74 | 35.21 |
 
-</details>
-
-<details>
-<summary>KMMLU — Accuracy by category (partial)</summary>
+### KMMLU — Accuracy by category (partial)
 
 | category | gemma4-e2b | qwen3-4b |
 |:---|---:|---:|
@@ -199,19 +186,13 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 | Agricultural Sciences | 33.80 | 29.80 |
 | Aviation Engineering and Maintenance | 40.00 | 41.22 |
 
-</details>
-
-<details>
-<summary>KMMLU-HARD — Accuracy by supercategory</summary>
+### KMMLU-HARD — Accuracy by supercategory
 
 | supercategory | gemma4-e2b | qwen3-4b |
 |:---|---:|---:|
 | Other | 23.70 | 21.88 |
 
-</details>
-
-<details>
-<summary>KMMLU-HARD — Accuracy by category</summary>
+### KMMLU-HARD — Accuracy by category
 
 | category | gemma4-e2b | qwen3-4b |
 |:---|---:|---:|
@@ -239,16 +220,11 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 | public_safety | 29.00 | 18.00 |
 | railway_and_automotive_engineering | 20.00 | 17.00 |
 
-</details>
-
-<details>
-<summary>KoBEST BoolQ — Accuracy by category</summary>
+### KoBEST BoolQ — Accuracy by category
 
 | category | gemma4-e2b | qwen3-4b |
 |:---|---:|---:|
 | unknown | 85.90 | 86.18 |
-
-</details>
 
 
 ## About
