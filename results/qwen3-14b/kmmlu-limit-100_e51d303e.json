@@ -1,0 +1,21 @@
+{
+  "job_id": "e51d303e-216a-4efb-9eb2-243490f4ad3a",
+  "name": "kmmlu-limit-100",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1/completions",
+    "name": "qwen3-14b"
+  },
+  "experiment": "kmmlu-limit-comparison",
+  "benchmarks": [
+    {
+      "id": "kmmlu",
+      "provider_id": "6804c429-27eb-4a46-a4ae-9570bf59fd8a",
+      "metrics": {
+        "category_accuracy.Accounting": 49,
+        "overall_accuracy": 49,
+        "supercategory_accuracy.HUMSS": 49
+      },
+      "mlflow_run_id": "bf81e0dbf3b9487eabaef66b4ec73ff1"
+    }
+  ]
+}

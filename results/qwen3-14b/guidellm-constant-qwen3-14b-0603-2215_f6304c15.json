@@ -1,0 +1,23 @@
+{
+  "job_id": "f6304c15-eb0e-4217-98b2-7f92ff8c0c50",
+  "name": "guidellm-constant-qwen3-14b-0603-2215",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1",
+    "name": "qwen3-14b"
+  },
+  "experiment": "guidellm-constant-qwen3-14b-0603-2215",
+  "benchmarks": [
+    {
+      "id": "constant",
+      "provider_id": "guidellm",
+      "metrics": {
+        "mean_itl_ms": 0,
+        "mean_ttft_ms": 0,
+        "output_tokens_per_second": 24.408517903879535,
+        "prompt_tokens_per_second": 47.664218733463606,
+        "requests_per_second": 0.1826058638782878
+      },
+      "mlflow_run_id": null
+    }
+  ]
+}

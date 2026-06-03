@@ -1,0 +1,32 @@
+{
+  "job_id": "ae1c5efe-0829-4a31-b4a6-802a159ab23f",
+  "name": "unified-click-0603-2118",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1/completions",
+    "name": "qwen3-14b"
+  },
+  "experiment": "qwen3-14b-full-eval-0603-2118",
+  "benchmarks": [
+    {
+      "id": "click",
+      "provider_id": "6804c429-27eb-4a46-a4ae-9570bf59fd8a",
+      "metrics": {
+        "category_accuracy.Economy": 81.36,
+        "category_accuracy.Functional": 82.35,
+        "category_accuracy.Geography": 70.4,
+        "category_accuracy.Grammar": 45.18,
+        "category_accuracy.History": 40.36,
+        "category_accuracy.Law": 56.16,
+        "category_accuracy.Politics": 77.38,
+        "category_accuracy.Pop Culture": 78.05,
+        "category_accuracy.Society": 80.58,
+        "category_accuracy.Textual": 84.93,
+        "category_accuracy.Tradition": 71.17,
+        "overall_accuracy": 66.67,
+        "supercategory_accuracy.Culture": 65.42,
+        "supercategory_accuracy.Language": 69.44
+      },
+      "mlflow_run_id": "e0a7cd733f8a42a696f2f62cfcbb3764"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "job_id": "e3e21646-5ee0-4ff3-b9e2-deb058ec1770",
+  "name": "unified-kmmlu_hard-0603-2257",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1/completions",
+    "name": "qwen3-14b"
+  },
+  "experiment": "qwen3-14b-full-eval-0603-2257",
+  "benchmarks": [
+    {
+      "id": "kmmlu_hard",
+      "provider_id": "6804c429-27eb-4a46-a4ae-9570bf59fd8a",
+      "metrics": {
+        "category_accuracy.accounting": 23.91,
+        "category_accuracy.biology": 23,
+        "category_accuracy.chemistry": 39,
+        "category_accuracy.computer_science": 36,
+        "category_accuracy.criminal_law": 28,
+        "category_accuracy.ecology": 23,
+        "category_accuracy.electrical_engineering": 19,
+        "category_accuracy.electronics_engineering": 43,
+        "category_accuracy.gas_technology_and_engineering": 24,
+        "category_accuracy.geomatics": 25,
+        "category_accuracy.health": 13.04,
+        "category_accuracy.information_technology": 37,
+        "category_accuracy.korean_history": 18.18,
+        "category_accuracy.machine_design_and_manufacturing": 26.09,
+        "category_accuracy.management": 35,
+        "category_accuracy.maritime_engineering": 29,
+        "category_accuracy.materials_engineering": 27,
+        "category_accuracy.math": 20,
+        "category_accuracy.nondestructive_testing": 27,
+        "category_accuracy.patent": 35.29,
+        "category_accuracy.political_science_and_sociology": 24.44,
+        "category_accuracy.public_safety": 21,
+        "category_accuracy.railway_and_automotive_engineering": 29,
+        "overall_accuracy": 27.95,
+        "supercategory_accuracy.Other": 27.95
+      },
+      "mlflow_run_id": "a1a0e7bd6f6d435a9f00242b504ce361"
+    }
+  ]
+}

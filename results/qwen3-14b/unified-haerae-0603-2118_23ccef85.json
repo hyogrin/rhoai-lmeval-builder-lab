@@ -1,0 +1,27 @@
+{
+  "job_id": "23ccef85-1050-438c-b1e7-cc2938631908",
+  "name": "unified-haerae-0603-2118",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1/completions",
+    "name": "qwen3-14b"
+  },
+  "experiment": "qwen3-14b-full-eval-0603-2118",
+  "benchmarks": [
+    {
+      "id": "haerae",
+      "provider_id": "6804c429-27eb-4a46-a4ae-9570bf59fd8a",
+      "metrics": {
+        "category_accuracy.correct_definition_matching": 83.96,
+        "category_accuracy.csat_geo": 16.67,
+        "category_accuracy.csat_law": 41.38,
+        "category_accuracy.csat_socio": 36.27,
+        "category_accuracy.date_understanding": 43.41,
+        "category_accuracy.general_knowledge": 50.87,
+        "category_accuracy.history": 57.98,
+        "category_accuracy.loan_words": 92.31,
+        "overall_accuracy": 54.03
+      },
+      "mlflow_run_id": "2efc2dd68a2946a1b86af9475d6bd681"
+    }
+  ]
+}

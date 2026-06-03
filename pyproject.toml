@@ -9,5 +9,5 @@ dependencies = [
     "jupyter",
     "ipykernel",
     "python-dotenv",
-    "eval-hub-sdk",
+    "eval-hub-sdk==0.1.8",
 ]

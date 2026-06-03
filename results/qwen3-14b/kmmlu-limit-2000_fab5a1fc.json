@@ -1,0 +1,24 @@
+{
+  "job_id": "fab5a1fc-7c46-4309-aa84-d2d757ce125d",
+  "name": "kmmlu-limit-2000",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1/completions",
+    "name": "qwen3-14b"
+  },
+  "experiment": "kmmlu-limit-comparison",
+  "benchmarks": [
+    {
+      "id": "kmmlu",
+      "provider_id": "6804c429-27eb-4a46-a4ae-9570bf59fd8a",
+      "metrics": {
+        "category_accuracy.Accounting": 49,
+        "category_accuracy.Agricultural Sciences": 42.7,
+        "category_accuracy.Aviation Engineering and Maintenance": 54.33,
+        "overall_accuracy": 48.25,
+        "supercategory_accuracy.HUMSS": 49,
+        "supercategory_accuracy.Other": 48.21
+      },
+      "mlflow_run_id": "dfce8f08a96b46d6a632a3d8ffa20929"
+    }
+  ]
+}

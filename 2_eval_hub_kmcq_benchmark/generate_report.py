@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
-Generate an HTML benchmark report from LMEvalJob result JSON files.
+Generate an HTML benchmark report from evaluation result JSON files.
+
+Supports both EvalHub and lm-evaluation-harness result formats.
 
 Usage:
     python generate_report.py --results-dir ../results --output report.html
     python generate_report.py --results-dir ../results --output report.html --title "My Eval Report"
 
 The script reads JSON result files from the results directory structure:
-    results/<model-name>/<task-name>.json
+    results/<model-name>/<job-name>.json
 
 And produces a standalone HTML file with:
     - Summary table with accuracy scores per model/task
@@ -95,14 +97,28 @@ def load_results(results_dir: Path) -> dict:
     return all_results
 
 
-def extract_scores(results_data: dict, metric_filter: str = "acc,none") -> dict:
-    """Extract accuracy scores from lm-evaluation-harness result format."""
-    scores = {}
-    results = results_data.get("results", {})
+def extract_scores(results_data: dict) -> dict:
+    """Extract accuracy scores from EvalHub or lm-evaluation-harness format.
 
+    Returns {task_id: score_percent}.
+    """
+    scores = {}
+
+    # EvalHub format: {"benchmarks": [{"id": "kmmlu", "metrics": {...}}]}
+    if "benchmarks" in results_data:
+        for bm in results_data["benchmarks"]:
+            task_id = bm.get("id", "unknown")
+            metrics = bm.get("metrics", {})
+            acc = metrics.get("overall_accuracy")
+            if acc is not None:
+                scores[task_id] = round(float(acc), 2)
+        return scores
+
+    # lm-evaluation-harness format: {"results": {"task": {"acc,none": 0.85}}}
+    results = results_data.get("results", {})
     for task_key, metrics in results.items():
         for metric_name, value in metrics.items():
-            if metric_name == metric_filter and isinstance(value, (int, float)):
+            if metric_name == "acc,none" and isinstance(value, (int, float)):
                 scores[task_key] = round(value * 100, 2)
 
     return scores
@@ -387,7 +403,7 @@ def generate_html(all_results: dict, title: str, output_path: Path):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate HTML benchmark report from LMEvalJob results"
+        description="Generate HTML benchmark report from evaluation results"
     )
     parser.add_argument(
         "--results-dir",

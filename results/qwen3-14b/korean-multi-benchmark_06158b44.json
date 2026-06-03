@@ -1,0 +1,40 @@
+{
+  "job_id": "06158b44-e228-4620-80a0-1adadb7ff30b",
+  "name": "korean-multi-benchmark",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1/completions",
+    "name": "qwen3-14b"
+  },
+  "experiment": "korean-comprehensive-eval",
+  "benchmarks": [
+    {
+      "id": "click",
+      "provider_id": "6804c429-27eb-4a46-a4ae-9570bf59fd8a",
+      "metrics": {
+        "category_accuracy.Economy": 80,
+        "overall_accuracy": 80,
+        "supercategory_accuracy.Culture": 80
+      },
+      "mlflow_run_id": "41963853e006456f88d72c8e0a8d4553"
+    },
+    {
+      "id": "haerae",
+      "provider_id": "6804c429-27eb-4a46-a4ae-9570bf59fd8a",
+      "metrics": {
+        "category_accuracy.correct_definition_matching": 100,
+        "overall_accuracy": 100
+      },
+      "mlflow_run_id": "c367c8b7a08f43afa51345f7b7749315"
+    },
+    {
+      "id": "kmmlu",
+      "provider_id": "6804c429-27eb-4a46-a4ae-9570bf59fd8a",
+      "metrics": {
+        "category_accuracy.Accounting": 60,
+        "overall_accuracy": 60,
+        "supercategory_accuracy.HUMSS": 60
+      },
+      "mlflow_run_id": "dc7c6829af414767ba77512a6181bc46"
+    }
+  ]
+}

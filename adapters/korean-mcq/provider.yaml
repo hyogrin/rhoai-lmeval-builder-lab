@@ -16,7 +16,7 @@ description: >
 
 runtime:
   k8s:
-    image: image-registry.openshift-image-registry.svc:5000/demo/korean-mcq-adapter:latest
+    image: image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/korean-mcq-adapter:latest
     entrypoint:
       - python
       - main.py
