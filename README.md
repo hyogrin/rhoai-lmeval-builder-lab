@@ -6,14 +6,14 @@ A hands-on workshop for running **Korean language evaluation benchmarks** on **R
 
 ```mermaid
 flowchart LR
-    User[User / Workbench] -->|oc apply| CRD[LMEvalJob CR]
-    User -->|SDK / REST| EvalHub[EvalHub Service]
-    CRD --> Operator[TrustyAI Operator]
-    EvalHub --> Operator
-    Operator --> Pod[lm-eval Pod]
-    Pod -->|API call| vLLM[vLLM InferenceService]
-    Pod -->|download| HF[HuggingFace Datasets]
+    User[User / Workbench] -->|SDK / REST| EvalHub[EvalHub Service]
     EvalHub -->|tracking| MLflow[MLflow]
+    EvalHub --> Operator[TrustyAI Operator]
+    Operator --> GuideLLM[GuideLLM Pod]
+    Operator --> MCQ[Korean MCQ Pod<br/>lm-evaluation-harness]
+    GuideLLM -->|load test| vLLM[vLLM InferenceService]
+    MCQ -->|API call| vLLM
+    MCQ -->|download| HF[HuggingFace Datasets]
 ```
 
 **How it works:**
