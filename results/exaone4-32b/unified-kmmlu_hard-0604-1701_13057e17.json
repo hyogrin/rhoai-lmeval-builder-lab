@@ -1,0 +1,17 @@
+{
+  "job_id": "13057e17-49ef-4a25-81ca-cec39c5fe9ab",
+  "name": "unified-kmmlu_hard-0604-1701",
+  "model": {
+    "url": "http://exaone4-32b-external-user-hyochoi.apps.ocp.cloud.rhai-tmm.dev/v1/completions",
+    "name": "exaone4-32b"
+  },
+  "experiment": "exaone4-32b-full-eval-0604-1701",
+  "benchmarks": [
+    {
+      "id": "kmmlu_hard",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {},
+      "mlflow_run_id": "1021105d6ee2444195bc77b33c722721"
+    }
+  ]
+}

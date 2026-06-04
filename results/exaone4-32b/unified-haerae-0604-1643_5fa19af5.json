@@ -1,0 +1,17 @@
+{
+  "job_id": "5fa19af5-4822-4a6f-9066-9bc3c26fa10b",
+  "name": "unified-haerae-0604-1643",
+  "model": {
+    "url": "http://exaone4-32b-external-user-hyochoi.apps.ocp.cloud.rhai-tmm.dev/v1/completions",
+    "name": "exaone4-32b"
+  },
+  "experiment": "exaone4-32b-full-eval-0604-1643",
+  "benchmarks": [
+    {
+      "id": "haerae",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {},
+      "mlflow_run_id": "306d5834b1744fc48e76e2d45e919994"
+    }
+  ]
+}

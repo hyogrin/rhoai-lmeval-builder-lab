@@ -1,0 +1,20 @@
+{
+  "job_id": "b74dff32-83d0-466f-8b62-b1668a2d7545",
+  "name": "unified-kobest_boolq-0604-1425",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1/completions",
+    "name": "qwen3-14b"
+  },
+  "experiment": "qwen3-14b-full-eval-0604-1425",
+  "benchmarks": [
+    {
+      "id": "kobest_boolq",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {
+        "category_accuracy.unknown": 93.23,
+        "overall_accuracy": 93.23
+      },
+      "mlflow_run_id": "c4b239c11da241eb9e257910e4ab67c1"
+    }
+  ]
+}

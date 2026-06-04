@@ -1,0 +1,23 @@
+{
+  "job_id": "a4798e72-0a2c-42e8-97a5-04d84c9585e6",
+  "name": "unified-perf-exaone4-32b-0604-1854",
+  "model": {
+    "url": "http://exaone4-32b-external-user-hyochoi.apps.ocp.cloud.rhai-tmm.dev/v1",
+    "name": "exaone4-32b"
+  },
+  "experiment": "exaone4-32b-full-eval-0604-1854",
+  "benchmarks": [
+    {
+      "id": "throughput",
+      "provider_id": "guidellm",
+      "metrics": {
+        "mean_itl_ms": 18.656973611740835,
+        "mean_ttft_ms": 168.33040237426758,
+        "output_tokens_per_second": 47.73970339391428,
+        "prompt_tokens_per_second": 107.43354823204194,
+        "requests_per_second": 0.7437940832082106
+      },
+      "mlflow_run_id": null
+    }
+  ]
+}

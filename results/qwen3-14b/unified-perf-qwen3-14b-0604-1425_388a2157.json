@@ -1,0 +1,23 @@
+{
+  "job_id": "388a2157-eb84-4573-b1c2-0a8ce2192e35",
+  "name": "unified-perf-qwen3-14b-0604-1425",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1",
+    "name": "qwen3-14b"
+  },
+  "experiment": "qwen3-14b-full-eval-0604-1425",
+  "benchmarks": [
+    {
+      "id": "constant",
+      "provider_id": "guidellm",
+      "metrics": {
+        "mean_itl_ms": 0,
+        "mean_ttft_ms": 0,
+        "output_tokens_per_second": 26.64552819150299,
+        "prompt_tokens_per_second": 52.05072092357078,
+        "requests_per_second": 0.19166666666666668
+      },
+      "mlflow_run_id": null
+    }
+  ]
+}

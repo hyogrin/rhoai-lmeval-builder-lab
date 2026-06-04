@@ -1,0 +1,29 @@
+{
+  "job_id": "a0b4ee72-aaf7-4cb7-b131-d08618ab4b0f",
+  "name": "korean-multi-benchmark",
+  "model": {
+    "url": "http://exaone4-32b-external-user-hyochoi.apps.ocp.cloud.rhai-tmm.dev/v1/completions",
+    "name": "exaone4-32b"
+  },
+  "experiment": "korean-comprehensive-eval",
+  "benchmarks": [
+    {
+      "id": "click",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {},
+      "mlflow_run_id": "920c82dd496c4267b60b08a6e881af7c"
+    },
+    {
+      "id": "haerae",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {},
+      "mlflow_run_id": "c3021c48e32a449a911de2d9a600784d"
+    },
+    {
+      "id": "kmmlu",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {},
+      "mlflow_run_id": "2990736363774ddba8f7e27cfdf6dda4"
+    }
+  ]
+}

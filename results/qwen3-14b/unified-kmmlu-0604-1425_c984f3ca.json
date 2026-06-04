@@ -1,0 +1,36 @@
+{
+  "job_id": "c984f3ca-3d11-4b13-8b3d-34fcadb9bd2d",
+  "name": "unified-kmmlu-0604-1425",
+  "model": {
+    "url": "https://qwen3-14b-kserve-workload-svc.rhoai-models.svc.cluster.local:8000/v1/completions",
+    "name": "qwen3-14b"
+  },
+  "experiment": "qwen3-14b-full-eval-0604-1425",
+  "benchmarks": [
+    {
+      "id": "kmmlu",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {
+        "category_accuracy.Accounting": 49,
+        "category_accuracy.Agricultural Sciences": 42.8,
+        "category_accuracy.Aviation Engineering and Maintenance": 54.2,
+        "category_accuracy.Biology": 45.5,
+        "category_accuracy.Chemical Engineering": 57.8,
+        "category_accuracy.Chemistry": 66.83,
+        "category_accuracy.Civil Engineering": 49.7,
+        "category_accuracy.Computer Science": 79,
+        "category_accuracy.Construction": 44,
+        "category_accuracy.Criminal Law": 46,
+        "category_accuracy.Ecology": 55.1,
+        "category_accuracy.Economics": 66.92,
+        "category_accuracy.Education": 70,
+        "category_accuracy.Electrical Engineering": 41.03,
+        "overall_accuracy": 53.37,
+        "supercategory_accuracy.HUMSS": 62.42,
+        "supercategory_accuracy.Other": 52.67,
+        "supercategory_accuracy.STEM": 54.12
+      },
+      "mlflow_run_id": "4c99533acfe54a39ae279ab3b1f324a4"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "job_id": "f834266e-ff84-4146-9b88-dd33350af413",
+  "name": "kmmlu-limit-100",
+  "model": {
+    "url": "http://exaone4-32b-external-user-hyochoi.apps.ocp.cloud.rhai-tmm.dev/v1/completions",
+    "name": "exaone4-32b"
+  },
+  "experiment": "kmmlu-limit-comparison",
+  "benchmarks": [
+    {
+      "id": "kmmlu",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {},
+      "mlflow_run_id": "0f0c4006c038440da3b440a19e12f367"
+    }
+  ]
+}

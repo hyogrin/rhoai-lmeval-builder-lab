@@ -1,0 +1,17 @@
+{
+  "job_id": "10385ae1-e485-409a-90c7-fe2cba6a9c0c",
+  "name": "unified-click-0604-1701",
+  "model": {
+    "url": "http://exaone4-32b-external-user-hyochoi.apps.ocp.cloud.rhai-tmm.dev/v1/completions",
+    "name": "exaone4-32b"
+  },
+  "experiment": "exaone4-32b-full-eval-0604-1701",
+  "benchmarks": [
+    {
+      "id": "click",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {},
+      "mlflow_run_id": "a226a82fe99c454c83efa923b2078b02"
+    }
+  ]
+}

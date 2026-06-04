@@ -1,0 +1,17 @@
+{
+  "job_id": "2ad207d2-52c3-4b50-9220-eefb53e512aa",
+  "name": "unified-kobest_boolq-0604-1643",
+  "model": {
+    "url": "http://exaone4-32b-external-user-hyochoi.apps.ocp.cloud.rhai-tmm.dev/v1/completions",
+    "name": "exaone4-32b"
+  },
+  "experiment": "exaone4-32b-full-eval-0604-1643",
+  "benchmarks": [
+    {
+      "id": "kobest_boolq",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {},
+      "mlflow_run_id": "a8638867ec50487fa7db4976804a3716"
+    }
+  ]
+}

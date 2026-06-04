@@ -1,0 +1,32 @@
+{
+  "job_id": "d7b5d79c-f546-4793-8bac-c3e97874104a",
+  "name": "unified-click-0604-1854",
+  "model": {
+    "url": "http://exaone4-32b-external-user-hyochoi.apps.ocp.cloud.rhai-tmm.dev/v1/completions",
+    "name": "exaone4-32b"
+  },
+  "experiment": "exaone4-32b-full-eval-0604-1854",
+  "benchmarks": [
+    {
+      "id": "click",
+      "provider_id": "aef86445-51ee-4bf2-a89b-2ef9863d118f",
+      "metrics": {
+        "category_accuracy.Economy": 89.83,
+        "category_accuracy.Functional": 70.71,
+        "category_accuracy.Geography": 78.23,
+        "category_accuracy.Grammar": 43.29,
+        "category_accuracy.History": 44.64,
+        "category_accuracy.Law": 58.45,
+        "category_accuracy.Politics": 79.76,
+        "category_accuracy.Pop Culture": 82.93,
+        "category_accuracy.Society": 81.23,
+        "category_accuracy.Textual": 82.91,
+        "category_accuracy.Tradition": 78.38,
+        "overall_accuracy": 68.3,
+        "supercategory_accuracy.Culture": 69.43,
+        "supercategory_accuracy.Language": 65.79
+      },
+      "mlflow_run_id": "c35f14d5b889466482730834525f3f17"
+    }
+  ]
+}
