@@ -1,0 +1,20 @@
+{
+  "job_id": "93853a6a-823c-425e-bc9f-5b572ad2cb17",
+  "name": "unified-kobest_boolq-0611-0946",
+  "model": {
+    "url": "https://gemma4-12b-kserve-workload-svc.demo.svc.cluster.local:8000/v1/completions",
+    "name": "gemma4-12b"
+  },
+  "experiment": "gemma4-12b-full-eval-0611-0946",
+  "benchmarks": [
+    {
+      "id": "kobest_boolq",
+      "provider_id": "korean_mcq",
+      "metrics": {
+        "category_accuracy.unknown": 96.01,
+        "overall_accuracy": 96.01
+      },
+      "mlflow_run_id": "01b910d0f73c4dfab92c97109b176712"
+    }
+  ]
+}

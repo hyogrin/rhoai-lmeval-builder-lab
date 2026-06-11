@@ -24,7 +24,7 @@ flowchart LR
 
 ## Model
 
-This workshop uses **Gemma 4 (E2B-it)**, **Qwen3-4B**, **Qwen3-14B**, and **EXAONE 4.0 32B** deployed on OpenShift AI via a custom vLLM ServingRuntime as target models for evaluation. The setup notebook includes instructions for deploying models with GPU support.
+This workshop uses **Gemma 4 (E2B-it)**, **Gemma 4 12B**, **Qwen3-4B**, **Qwen3-14B**, and **EXAONE 4.0 32B** deployed on OpenShift AI via a custom vLLM ServingRuntime as target models for evaluation. The setup notebook includes instructions for deploying models with GPU support.
 
 ## What's Included
 
@@ -59,29 +59,29 @@ This workshop uses **Gemma 4 (E2B-it)**, **Qwen3-4B**, **Qwen3-14B**, and **EXAO
 
 ## Evaluation Results
 
-We evaluated **Gemma 4 (E2B-it)**, **Qwen3-4B**, **Qwen3-14B**, and **EXAONE 4.0 32B** on 5 Korean benchmarks using the custom `korean-mcq` EvalHub adapter with up to 10,000 samples per dataset. Evaluations were orchestrated via EvalHub SDK, with results tracked in MLflow.
+We evaluated **Gemma 4 (E2B-it)**, **Gemma 4 12B**, **Qwen3-4B**, **Qwen3-14B**, and **EXAONE 4.0 32B** on 5 Korean benchmarks using the custom `korean-mcq` EvalHub adapter with up to 10,000 samples per dataset. Evaluations were orchestrated via EvalHub SDK, with results tracked in MLflow.
 
 For Qwen3-4B, **MLflow Tracing** is enabled — each LLM call (prompt/response) is recorded as a structured trace span via `MlflowClient.start_trace()` API, visible in the MLflow UI's Traces tab. This is achieved by connecting the adapter pod directly to the MLflow service (bypassing the EvalHub proxy which only supports MLflow 2.0 API).
 
 ![evaluation result on MLflow](./images/eval-result-mlflow.png)
 
-| Benchmark | Gemma4-E2B | Qwen3-4B | Qwen3-14B | EXAONE4-32B | Samples |
-|:----------|-------:|-------:|-------:|-------:|-------:|
-| CLIcK | 56.11% | 56.66% | 66.82% | 68.30% | 1,995 |
-| HAE-RAE Bench 1.1 | 51.90% | 46.22% | 54.64% | 63.20% | 1,538 |
-| KMMLU (0-shot) | 36.45% | 35.70% | 48.30% | 52.24% | 10,000 |
-| KMMLU-HARD (0-shot) | 23.70% | 21.88% | 27.95% | 29.48% | 10,000 |
-| KoBEST BoolQ | 85.90% | 86.18% | 93.23% | 91.52% | 1,404 |
+| Benchmark | Gemma4-E2B | Qwen3-4B | Qwen3-14B | EXAONE4-32B | Gemma4-12B | Samples |
+|:----------|-------:|-------:|-------:|-------:|-------:|-------:|
+| CLIcK | 56.11% | 56.66% | 66.82% | 68.30% | 73.88% | 1,995 |
+| HAE-RAE Bench 1.1 | 51.90% | 46.22% | 54.64% | 63.20% | 69.87% | 1,538 |
+| KMMLU (0-shot) | 36.45% | 35.70% | 48.30% | 52.24% | 57.51% | 10,000 |
+| KMMLU-HARD (0-shot) | 23.70% | 21.88% | 27.95% | 29.48% | 33.80% | 10,000 |
+| KoBEST BoolQ | 85.90% | 86.18% | 93.23% | 91.52% | 96.08% | 1,404 |
 
 ### Performance (GuideLLM Throughput)
 
-| Metric | Qwen3-14B | EXAONE4-32B |
-|:---|---:|---:|
-| Output tokens/sec | 26.65 | 47.74 |
-| Prompt tokens/sec | 52.05 | 107.43 |
-| Requests/sec | 0.19 | 0.74 |
-| Mean TTFT (ms) | - | 168.33 |
-| Mean ITL (ms) | - | 18.66 |
+| Metric | Qwen3-14B | EXAONE4-32B | Gemma4-12B |
+|:---|---:|---:|---:|
+| Output tokens/sec | 26.65 | 47.74 | 22.86 |
+| Prompt tokens/sec | 52.05 | 107.43 | 51.19 |
+| Requests/sec | 0.19 | 0.74 | 0.36 |
+| Mean TTFT (ms) | - | 168.33 | 98.78 |
+| Mean ITL (ms) | - | 18.66 | 42.88 |
 
 
 Accumulated benchmark results across major open-weight models are maintained at:
@@ -143,133 +143,134 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 
 ### CLIcK — Accuracy by supercategory
 
-| supercategory | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b |
-|:---|---:|---:|---:|---:|
-| Culture | 57.76 | 56.19 | 65.65 | 69.43 |
-| Language | 52.16 | 57.69 | 69.44 | 65.79 |
+| supercategory | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b | gemma4-12b |
+|:---|---:|---:|---:|---:|---:|
+| Culture | 57.76 | 56.19 | 65.65 | 69.43 | 73.80 |
+| Language | 52.16 | 57.69 | 69.44 | 65.79 | 73.56 |
 
 ### CLIcK — Accuracy by category
 
-| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b |
-|:---|---:|---:|---:|---:|
-| Economy | 72.88 | 66.10 | 81.36 | 89.83 |
-| Functional | 58.57 | 61.76 | 82.35 | 70.71 |
-| Geography | 65.55 | 61.11 | 71.20 | 78.23 |
-| Grammar | 31.67 | 34.80 | 45.18 | 43.29 |
-| History | 34.29 | 34.29 | 40.71 | 44.64 |
-| Law | 44.75 | 50.23 | 56.16 | 58.45 |
-| Politics | 67.86 | 67.86 | 77.38 | 79.76 |
-| Pop Culture | 68.29 | 60.98 | 78.05 | 82.93 |
-| Society | 71.52 | 70.55 | 80.91 | 81.23 |
-| Textual | 67.55 | 75.46 | 84.93 | 82.91 |
-| Tradition | 67.12 | 59.01 | 71.17 | 78.38 |
+| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b | gemma4-12b |
+|:---|---:|---:|---:|---:|---:|
+| Economy | 72.88 | 66.10 | 81.36 | 89.83 | 91.53 |
+| Functional | 58.57 | 61.76 | 82.35 | 70.71 | 85.71 |
+| Geography | 65.55 | 61.11 | 71.20 | 78.23 | 80.33 |
+| Grammar | 31.67 | 34.80 | 45.18 | 43.29 | 51.07 |
+| History | 34.29 | 34.29 | 40.71 | 44.64 | 49.29 |
+| Law | 44.75 | 50.23 | 56.16 | 58.45 | 64.84 |
+| Politics | 67.86 | 67.86 | 77.38 | 79.76 | 79.76 |
+| Pop Culture | 68.29 | 60.98 | 78.05 | 82.93 | 87.80 |
+| Society | 71.52 | 70.55 | 80.91 | 81.23 | 86.41 |
+| Textual | 67.55 | 75.46 | 84.93 | 82.91 | 88.19 |
+| Tradition | 67.12 | 59.01 | 71.17 | 78.38 | 82.88 |
 
 ### HAE-RAE — Accuracy by category
 
-| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b |
-|:---|---:|---:|---:|---:|
-| correct_definition_matching | 59.40 | 50.00 | 83.96 | 78.54 |
-| csat_geo | 53.85 | 42.86 | 16.67 | 66.67 |
-| csat_law | 21.74 | 29.41 | 40.68 | 35.00 |
-| csat_socio | 31.58 | 21.43 | 36.00 | 37.74 |
-| general_knowledge | 39.87 | 46.00 | 50.29 | 54.86 |
-| history | 55.85 | 36.52 | 58.51 | 89.19 |
-| loan_words | 83.93 | 78.57 | 92.00 | 77.27 |
-| lyrics_denoising | - | - | - | 0.00 |
-| rare_words | - | - | - | 83.29 |
-| reading_comprehension | - | - | - | 72.00 |
-| standard_nomenclature | - | - | - | 75.21 |
+| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b | gemma4-12b |
+|:---|---:|---:|---:|---:|---:|
+| correct_definition_matching | 59.40 | 50.00 | 83.96 | 78.54 | 85.29 |
+| csat_geo | 53.85 | 42.86 | 16.67 | 66.67 | 65.15 |
+| csat_law | 21.74 | 29.41 | 40.68 | 35.00 | 52.70 |
+| csat_socio | 31.58 | 21.43 | 36.00 | 37.74 | 49.23 |
+| date_understanding | - | - | - | - | 56.06 |
+| general_knowledge | 39.87 | 46.00 | 50.29 | 54.86 | 60.23 |
+| history | 55.85 | 36.52 | 58.51 | 89.19 | 83.96 |
+| loan_words | 83.93 | 78.57 | 92.00 | 77.27 | 72.89 |
+| lyrics_denoising | - | - | - | 0.00 | 0.00 |
+| rare_words | - | - | - | 83.29 | 81.56 |
+| reading_comprehension | - | - | - | 72.00 | 81.51 |
+| standard_nomenclature | - | - | - | 75.21 | 75.33 |
 
 ### KMMLU — Accuracy by supercategory
 
-| supercategory | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b |
-|:---|---:|---:|---:|---:|
-| HUMSS | 31.00 | 45.00 | 50.00 | 67.58 |
-| STEM | - | - | - | 51.92 |
-| Other | 36.74 | 35.21 | 48.21 | 51.64 |
+| supercategory | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b | gemma4-12b |
+|:---|---:|---:|---:|---:|---:|
+| HUMSS | 31.00 | 45.00 | 50.00 | 67.58 | 72.73 |
+| STEM | - | - | - | 51.92 | 57.46 |
+| Other | 36.74 | 35.21 | 48.21 | 51.64 | 57.00 |
 
 ### KMMLU — Accuracy by category (partial)
 
-| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b |
-|:---|---:|---:|---:|---:|
-| Accounting | 31.00 | 45.00 | 50.00 | 61.00 |
-| Agricultural Sciences | 33.80 | 29.80 | 42.70 | 41.90 |
-| Aviation Engineering and Maintenance | 40.00 | 41.22 | 54.33 | 56.30 |
-| Biology | - | - | - | 46.20 |
-| Chemical Engineering | - | - | - | 57.00 |
-| Chemistry | - | - | - | 57.67 |
-| Civil Engineering | - | - | - | 45.40 |
-| Computer Science | - | - | - | 81.00 |
-| Construction | - | - | - | 41.00 |
-| Criminal Law | - | - | - | 44.00 |
-| Ecology | - | - | - | 54.20 |
-| Economics | - | - | - | 63.85 |
-| Education | - | - | - | 79.00 |
-| Electrical Engineering | - | - | - | 38.74 |
+| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b | gemma4-12b |
+|:---|---:|---:|---:|---:|---:|
+| Accounting | 31.00 | 45.00 | 50.00 | 61.00 | 67.00 |
+| Agricultural Sciences | 33.80 | 29.80 | 42.70 | 41.90 | 49.90 |
+| Aviation Engineering and Maintenance | 40.00 | 41.22 | 54.33 | 56.30 | 58.80 |
+| Biology | - | - | - | 46.20 | 48.80 |
+| Chemical Engineering | - | - | - | 57.00 | 60.20 |
+| Chemistry | - | - | - | 57.67 | 65.50 |
+| Civil Engineering | - | - | - | 45.40 | 55.60 |
+| Computer Science | - | - | - | 81.00 | 80.90 |
+| Construction | - | - | - | 41.00 | 49.80 |
+| Criminal Law | - | - | - | 44.00 | 48.00 |
+| Ecology | - | - | - | 54.20 | 61.30 |
+| Economics | - | - | - | 63.85 | 73.85 |
+| Education | - | - | - | 79.00 | 77.00 |
+| Electrical Engineering | - | - | - | 38.74 | 43.84 |
 
 ### KMMLU-HARD — Accuracy by supercategory
 
-| supercategory | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b |
-|:---|---:|---:|---:|---:|
-| Other | 23.70 | 21.88 | 27.95 | 29.48 |
+| supercategory | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b | gemma4-12b |
+|:---|---:|---:|---:|---:|---:|
+| Other | 23.70 | 21.88 | 27.95 | 29.48 | 33.83 |
 
 > EXAONE4-32B evaluated with limit=10,000 (covers all 45 KMMLU-HARD categories).
 
 ### KMMLU-HARD — Accuracy by category
 
-| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b |
-|:---|---:|---:|---:|---:|
-| accounting | 15.22 | 15.22 | 23.91 | 36.96 |
-| agricultural_sciences | - | - | - | 19.00 |
-| aviation_engineering | - | - | - | 35.00 |
-| biology | 14.00 | 14.00 | 23.00 | 30.00 |
-| chemical_engineering | - | - | - | 31.00 |
-| chemistry | 34.00 | 31.00 | 39.00 | 31.00 |
-| civil_engineering | - | - | - | 27.00 |
-| computer_science | 29.00 | 24.00 | 36.00 | 32.00 |
-| construction | - | - | - | 28.00 |
-| criminal_law | 26.00 | 22.00 | 28.00 | 23.00 |
-| ecology | 28.00 | 14.00 | 23.00 | 26.00 |
-| economics | - | - | - | 35.71 |
-| education | - | - | - | 52.17 |
-| electrical_engineering | 22.00 | 18.00 | 19.00 | 32.00 |
-| electronics_engineering | 22.00 | 28.28 | 43.00 | 32.00 |
-| energy_management | - | - | - | 33.00 |
-| environmental_science | - | - | - | 25.00 |
-| fashion | - | - | - | 25.00 |
-| food_processing | - | - | - | 18.00 |
-| gas_technology_and_engineering | 25.00 | 18.00 | 24.00 | 20.00 |
-| geomatics | 30.00 | 17.00 | 25.00 | 29.00 |
-| health | 34.78 | 26.09 | 13.04 | 43.48 |
-| industrial_engineer | - | - | - | 23.00 |
-| information_technology | 23.00 | 35.00 | 37.00 | 36.00 |
-| interior_architecture | - | - | - | 31.00 |
-| korean_history | 9.09 | 20.45 | 18.18 | 20.45 |
-| law | - | - | - | 32.00 |
-| machine_design_and_manufacturing | 17.39 | 21.74 | 26.09 | 31.00 |
-| management | 20.00 | 29.00 | 35.00 | 34.00 |
-| maritime_engineering | 16.00 | 31.00 | 29.00 | 24.00 |
-| marketing | - | - | - | 42.00 |
-| materials_engineering | 27.00 | 23.00 | 27.00 | 35.00 |
-| math | 20.00 | 12.24 | 20.00 | 29.00 |
-| mechanical_engineering | - | - | - | 29.00 |
-| nondestructive_testing | 27.00 | 17.00 | 27.00 | 37.00 |
-| patent | 23.53 | 29.41 | 35.29 | 19.61 |
-| political_science_and_sociology | 25.56 | 24.44 | 24.44 | 31.11 |
-| psychology | - | - | - | 29.00 |
-| public_safety | 29.00 | 18.00 | 21.00 | 23.00 |
-| railway_and_automotive_engineering | 20.00 | 17.00 | 29.00 | 21.00 |
-| real_estate | - | - | - | 35.96 |
-| refrigerating_machinery | - | - | - | 34.00 |
-| social_welfare | - | - | - | 33.00 |
-| taxation | - | - | - | 25.00 |
-| telecommunications | - | - | - | 34.00 |
+| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b | gemma4-12b |
+|:---|---:|---:|---:|---:|---:|
+| accounting | 15.22 | 15.22 | 23.91 | 36.96 | 54.35 |
+| agricultural_sciences | - | - | - | 19.00 | 30.00 |
+| aviation_engineering | - | - | - | 35.00 | 31.00 |
+| biology | 14.00 | 14.00 | 23.00 | 30.00 | 27.00 |
+| chemical_engineering | - | - | - | 31.00 | 29.00 |
+| chemistry | 34.00 | 31.00 | 39.00 | 31.00 | 47.00 |
+| civil_engineering | - | - | - | 27.00 | 30.00 |
+| computer_science | 29.00 | 24.00 | 36.00 | 32.00 | 39.00 |
+| construction | - | - | - | 28.00 | 27.00 |
+| criminal_law | 26.00 | 22.00 | 28.00 | 23.00 | 34.00 |
+| ecology | 28.00 | 14.00 | 23.00 | 26.00 | 27.00 |
+| economics | - | - | - | 35.71 | 47.62 |
+| education | - | - | - | 52.17 | 43.48 |
+| electrical_engineering | 22.00 | 18.00 | 19.00 | 32.00 | 28.00 |
+| electronics_engineering | 22.00 | 28.28 | 43.00 | 32.00 | 43.00 |
+| energy_management | - | - | - | 33.00 | 36.00 |
+| environmental_science | - | - | - | 25.00 | 24.00 |
+| fashion | - | - | - | 25.00 | 27.00 |
+| food_processing | - | - | - | 18.00 | 26.00 |
+| gas_technology_and_engineering | 25.00 | 18.00 | 24.00 | 20.00 | 27.00 |
+| geomatics | 30.00 | 17.00 | 25.00 | 29.00 | 40.00 |
+| health | 34.78 | 26.09 | 13.04 | 43.48 | 47.83 |
+| industrial_engineer | - | - | - | 23.00 | 32.00 |
+| information_technology | 23.00 | 35.00 | 37.00 | 36.00 | 37.00 |
+| interior_architecture | - | - | - | 31.00 | 32.00 |
+| korean_history | 9.09 | 20.45 | 18.18 | 20.45 | 25.58 |
+| law | - | - | - | 32.00 | 40.00 |
+| machine_design_and_manufacturing | 17.39 | 21.74 | 26.09 | 31.00 | 33.00 |
+| management | 20.00 | 29.00 | 35.00 | 34.00 | 46.00 |
+| maritime_engineering | 16.00 | 31.00 | 29.00 | 24.00 | 25.00 |
+| marketing | - | - | - | 42.00 | 47.00 |
+| materials_engineering | 27.00 | 23.00 | 27.00 | 35.00 | 33.00 |
+| math | 20.00 | 12.24 | 20.00 | 29.00 | 25.00 |
+| mechanical_engineering | - | - | - | 29.00 | 29.00 |
+| nondestructive_testing | 27.00 | 17.00 | 27.00 | 37.00 | 31.00 |
+| patent | 23.53 | 29.41 | 35.29 | 19.61 | 45.10 |
+| political_science_and_sociology | 25.56 | 24.44 | 24.44 | 31.11 | 36.67 |
+| psychology | - | - | - | 29.00 | 34.00 |
+| public_safety | 29.00 | 18.00 | 21.00 | 23.00 | 25.00 |
+| railway_and_automotive_engineering | 20.00 | 17.00 | 29.00 | 21.00 | 26.00 |
+| real_estate | - | - | - | 35.96 | 42.70 |
+| refrigerating_machinery | - | - | - | 34.00 | 36.00 |
+| social_welfare | - | - | - | 33.00 | 47.00 |
+| taxation | - | - | - | 25.00 | 26.04 |
+| telecommunications | - | - | - | 34.00 | 42.00 |
 
 ### KoBEST BoolQ
 
-| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b |
-|:---|---:|---:|---:|---:|
-| overall | 85.90 | 86.18 | 93.23 | 91.52 |
+| category | gemma4-e2b | qwen3-4b | qwen3-14b | exaone4-32b | gemma4-12b |
+|:---|---:|---:|---:|---:|---:|
+| overall | 85.90 | 86.18 | 93.23 | 91.52 | 96.08 |
 
 
 ## About

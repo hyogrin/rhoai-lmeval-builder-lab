@@ -1,0 +1,32 @@
+{
+  "job_id": "4e1b0794-765d-4326-b7e4-8b25333ac68b",
+  "name": "unified-click-0611-0946",
+  "model": {
+    "url": "https://gemma4-12b-kserve-workload-svc.demo.svc.cluster.local:8000/v1/completions",
+    "name": "gemma4-12b"
+  },
+  "experiment": "gemma4-12b-full-eval-0611-0946",
+  "benchmarks": [
+    {
+      "id": "click",
+      "provider_id": "korean_mcq",
+      "metrics": {
+        "category_accuracy.Economy": 91.53,
+        "category_accuracy.Functional": 85.71,
+        "category_accuracy.Geography": 80.33,
+        "category_accuracy.Grammar": 51.07,
+        "category_accuracy.History": 49.29,
+        "category_accuracy.Law": 64.84,
+        "category_accuracy.Politics": 79.76,
+        "category_accuracy.Pop Culture": 87.8,
+        "category_accuracy.Society": 86.41,
+        "category_accuracy.Textual": 88.19,
+        "category_accuracy.Tradition": 82.88,
+        "overall_accuracy": 73.73,
+        "supercategory_accuracy.Culture": 73.8,
+        "supercategory_accuracy.Language": 73.56
+      },
+      "mlflow_run_id": "37eb98384f9c49cdb54eeb9d25680ae0"
+    }
+  ]
+}
