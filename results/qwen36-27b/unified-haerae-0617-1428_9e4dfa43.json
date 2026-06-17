@@ -1,0 +1,31 @@
+{
+  "job_id": "9e4dfa43-c3d1-48f2-8701-d76b7c14590a",
+  "name": "unified-haerae-0617-1428",
+  "model": {
+    "url": "https://qwen36-27b-kserve-workload-svc.demo.svc.cluster.local:8000/v1/completions",
+    "name": "qwen36-27b"
+  },
+  "experiment": "qwen36-27b-full-eval-0617-1428",
+  "benchmarks": [
+    {
+      "id": "haerae",
+      "provider_id": "korean_mcq",
+      "metrics": {
+        "category_accuracy.correct_definition_matching": 0,
+        "category_accuracy.csat_geo": 22.22,
+        "category_accuracy.csat_law": 26,
+        "category_accuracy.csat_socio": 22.34,
+        "category_accuracy.date_understanding": 0,
+        "category_accuracy.general_knowledge": 23.91,
+        "category_accuracy.history": 50,
+        "category_accuracy.loan_words": 24.56,
+        "category_accuracy.lyrics_denoising": 0,
+        "category_accuracy.rare_words": 66.67,
+        "category_accuracy.reading_comprehension": 15.79,
+        "category_accuracy.standard_nomenclature": 26.58,
+        "overall_accuracy": 16
+      },
+      "mlflow_run_id": "58512d1684b5463aae7c1b8287549cde"
+    }
+  ]
+}

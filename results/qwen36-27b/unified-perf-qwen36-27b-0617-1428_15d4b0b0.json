@@ -1,0 +1,23 @@
+{
+  "job_id": "15d4b0b0-860d-4f6a-91ba-742aea659e2a",
+  "name": "unified-perf-qwen36-27b-0617-1428",
+  "model": {
+    "url": "https://qwen36-27b-kserve-workload-svc.demo.svc.cluster.local:8000/v1",
+    "name": "qwen36-27b"
+  },
+  "experiment": "qwen36-27b-full-eval-0617-1428",
+  "benchmarks": [
+    {
+      "id": "throughput",
+      "provider_id": "guidellm",
+      "metrics": {
+        "mean_itl_ms": 85.45799700327365,
+        "mean_ttft_ms": 235.4049610369133,
+        "output_tokens_per_second": 11.402229222897363,
+        "prompt_tokens_per_second": 25.407045203068346,
+        "requests_per_second": 0.17777777777777778
+      },
+      "mlflow_run_id": null
+    }
+  ]
+}

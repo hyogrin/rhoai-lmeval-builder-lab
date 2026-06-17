@@ -441,9 +441,17 @@ class KoreanMCQAdapter(FrameworkAdapter):
         and connection errors with exponential backoff + jitter.
         """
         max_retries = 5
+        messages = []
+        if os.getenv("DISABLE_THINKING", "true").lower() == "true":
+            messages.append({
+                "role": "system",
+                "content": "/no_think\nYou are an exam assistant. Output ONLY the answer letter. No explanation.",
+            })
+        messages.append({"role": "user", "content": prompt})
+
         request_payload = {
             "model": model_name,
-            "messages": [{"role": "user", "content": prompt}],
+            "messages": messages,
             "temperature": temperature,
             "max_tokens": max_tokens,
         }

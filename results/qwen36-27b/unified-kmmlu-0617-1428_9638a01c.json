@@ -1,0 +1,36 @@
+{
+  "job_id": "9638a01c-2342-4017-9808-9ea355edb6f2",
+  "name": "unified-kmmlu-0617-1428",
+  "model": {
+    "url": "https://qwen36-27b-kserve-workload-svc.demo.svc.cluster.local:8000/v1/completions",
+    "name": "qwen36-27b"
+  },
+  "experiment": "qwen36-27b-full-eval-0617-1428",
+  "benchmarks": [
+    {
+      "id": "kmmlu",
+      "provider_id": "korean_mcq",
+      "metrics": {
+        "category_accuracy.Accounting": 69,
+        "category_accuracy.Agricultural Sciences": 51.7,
+        "category_accuracy.Aviation Engineering and Maintenance": 68.2,
+        "category_accuracy.Biology": 60.8,
+        "category_accuracy.Chemical Engineering": 69.7,
+        "category_accuracy.Chemistry": 77.33,
+        "category_accuracy.Civil Engineering": 55,
+        "category_accuracy.Computer Science": 87.5,
+        "category_accuracy.Construction": 47.4,
+        "category_accuracy.Criminal Law": 51,
+        "category_accuracy.Ecology": 62.5,
+        "category_accuracy.Economics": 83.08,
+        "category_accuracy.Education": 87,
+        "category_accuracy.Electrical Engineering": 45.06,
+        "overall_accuracy": 62.5,
+        "supercategory_accuracy.HUMSS": 80,
+        "supercategory_accuracy.Other": 60.66,
+        "supercategory_accuracy.STEM": 65.27
+      },
+      "mlflow_run_id": "1adfde119df94038a834b92a1ec8fa04"
+    }
+  ]
+}

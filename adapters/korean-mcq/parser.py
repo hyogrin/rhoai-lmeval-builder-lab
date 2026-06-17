@@ -3,6 +3,8 @@
 import re
 
 
+_THINK_END_PATTERN = re.compile(r"</think>\s*", re.IGNORECASE)
+
 _ANSWER_PATTERN = re.compile(
     r"""
     (?:
@@ -16,13 +18,26 @@ _ANSWER_PATTERN = re.compile(
 )
 
 
+def _strip_thinking(text: str) -> str:
+    """Strip reasoning/thinking content from model output.
+
+    Handles Qwen3/3.5/3.6 and DeepSeek-R1 style models that emit
+    <think>...</think> blocks before the actual answer.
+    """
+    match = _THINK_END_PATTERN.search(text)
+    if match:
+        return text[match.end():].strip()
+    return text
+
+
 def parse_answer(response: str, num_choices: int = 5) -> str | None:
     """Extract a single answer letter from an LLM response.
 
     Tries multiple heuristics:
-    1. If the response is a single character A-E, return it directly.
-    2. Look for common patterns like "Answer: B" or standalone letter.
-    3. Find the first valid letter in the response.
+    1. Strip <think>...</think> reasoning blocks if present.
+    2. If the response is a single character A-E, return it directly.
+    3. Look for common patterns like "Answer: B" or standalone letter.
+    4. Find the first valid letter in the response.
 
     Args:
         response: Raw LLM response string.
@@ -34,7 +49,10 @@ def parse_answer(response: str, num_choices: int = 5) -> str | None:
     if not response or not response.strip():
         return None
 
-    text = response.strip()
+    text = _strip_thinking(response.strip())
+    if not text:
+        return None
+
     valid_letters = {chr(65 + i) for i in range(num_choices)}
 
     # Fast path: single character response

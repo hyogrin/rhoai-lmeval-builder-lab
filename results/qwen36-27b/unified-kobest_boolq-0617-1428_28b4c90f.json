@@ -1,0 +1,20 @@
+{
+  "job_id": "28b4c90f-3cd2-486d-adb6-a0f917f5eb79",
+  "name": "unified-kobest_boolq-0617-1428",
+  "model": {
+    "url": "https://qwen36-27b-kserve-workload-svc.demo.svc.cluster.local:8000/v1/completions",
+    "name": "qwen36-27b"
+  },
+  "experiment": "qwen36-27b-full-eval-0617-1428",
+  "benchmarks": [
+    {
+      "id": "kobest_boolq",
+      "provider_id": "korean_mcq",
+      "metrics": {
+        "category_accuracy.unknown": 96.65,
+        "overall_accuracy": 96.65
+      },
+      "mlflow_run_id": "dfa8c3d0008e40c0aa649b8a963b78d4"
+    }
+  ]
+}
