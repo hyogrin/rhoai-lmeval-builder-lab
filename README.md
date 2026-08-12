@@ -101,6 +101,8 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
 
 ## Quick Start
 
+### Option A: Cluster Owner (full setup)
+
 1. Clone this repo into your OpenShift AI Workbench:
    ```bash
    git clone https://github.com/hyogrin/lm-eval-builder-lab.git
@@ -108,17 +110,33 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
    ```
 
 2. Open **`0_setup/2_eval_hub_setup.ipynb`** and run **Step 0**:
-   - Edit the 4 values in the cell (`NAMESPACE`, `MODEL_NAME`, `HF_TOKEN`, `HF_MODEL_ID`) to match your cluster
-   - Run the cell — it creates `.env` and installs all dependencies automatically
+   - Edit the 4 values in the cell (`NAMESPACE`, `MODEL_NAME`, `HF_TOKEN`, `HF_MODEL_ID`)
+   - Run the cell — it creates `.env` and installs all dependencies
 
 3. Run notebooks in order:
    - `0_setup/0_model_deploy.ipynb` — Deploy model (skip if already deployed)
    - `0_setup/1_LMEval_setup.ipynb` — One-time RBAC and secrets setup for LMEvalJob
-   - `0_setup/2_eval_hub_setup.ipynb` — Deploy EvalHub + MLflow (for Phase 1–3)
+   - `0_setup/2_eval_hub_setup.ipynb` — Deploy EvalHub + MLflow, then run **Step A-7** to generate a shared URL + token for participants
    - `1_eval_hub_guidellm_benchmark/1_guidellm_benchmark.ipynb` — Inference performance profiling (TTFT, ITL, throughput)
    - `2_eval_hub_kmcq_benchmark/1_kmcq_benchmark.ipynb` — Single Korean MCQ benchmark evaluation
    - `2_eval_hub_kmcq_benchmark/2_summarize_results.ipynb` — Analyze results and generate Markdown/HTML reports
    - `3_eval_hub_unified_benchmark/1_unified_benchmark.ipynb` — Multi-benchmark + unified accuracy/performance evaluation
+
+### Option B: Workshop Participant (shared cluster)
+
+No cluster setup required — the cluster owner provides you with the connection info.
+
+1. Clone this repo (Workbench, laptop, or any Jupyter environment):
+   ```bash
+   git clone https://github.com/hyogrin/lm-eval-builder-lab.git
+   cd lm-eval-builder-lab
+   ```
+
+2. Open **`0_setup/2_eval_hub_setup.ipynb`** and run **Step 0**:
+   - Paste the values from the cluster owner: `NAMESPACE`, `MODEL_NAME`, `EVALHUB_URL`, `EVALHUB_AUTH_TOKEN`
+   - Run the cell — it creates `.env` and installs dependencies
+
+3. **Skip** `0_model_deploy`, `1_LMEval_setup`, and Part A of `2_eval_hub_setup` — go directly to Phase 1-3 notebooks
 
 > **Local development:** If you have [uv](https://docs.astral.sh/uv/) installed, you can use `uv sync` instead for a reproducible virtual environment.
 

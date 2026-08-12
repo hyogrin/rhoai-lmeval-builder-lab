@@ -1,2 +1,2 @@
 from .evaluate_helper import evaluate, get_markdown_table, generate_results_md, generate_results_md_from_api
-from .port_forward import ensure_evalhub_port_forward
+from .port_forward import ensure_evalhub_port_forward, resolve_evalhub_url

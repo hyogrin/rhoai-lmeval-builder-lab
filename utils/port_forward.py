@@ -63,6 +63,24 @@ def ensure_evalhub_port_forward(
     )
 
 
+def resolve_evalhub_url(namespace: str = "demo") -> str:
+    """Return the EvalHub URL, skipping port-forward when an external URL is configured.
+
+    Priority:
+    1. EVALHUB_URL env var pointing to an external Route → use directly
+    2. EVALHUB_URL pointing to svc.cluster.local → use directly (in-cluster workbench)
+    3. Otherwise → start oc port-forward and return localhost URL
+    """
+    url = os.getenv("EVALHUB_URL", "").rstrip("/")
+    if url and "svc.cluster.local" not in url and not url.startswith("https://localhost"):
+        print(f"Using external EvalHub URL: {url}")
+        return url
+    if url and "svc.cluster.local" in url:
+        print(f"Using in-cluster EvalHub URL: {url}")
+        return url
+    return ensure_evalhub_port_forward(namespace=namespace)
+
+
 def _stop_port_forward():
     global _port_forward_proc
     if _port_forward_proc and _port_forward_proc.poll() is None:
