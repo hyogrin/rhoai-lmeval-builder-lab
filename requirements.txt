@@ -2,7 +2,7 @@
 # Install: pip install -q -r requirements.txt
 
 python-dotenv
-eval-hub-sdk==0.1.8
+eval-hub-sdk>=0.1.6
 mlflow==3.13.0
 pandas
 tabulate
