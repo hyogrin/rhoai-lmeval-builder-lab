@@ -63,29 +63,40 @@ def ensure_evalhub_port_forward(
     )
 
 
-def _is_in_cluster() -> bool:
-    """Check if we're running inside a Kubernetes cluster (e.g. OpenShift Workbench)."""
-    return bool(os.getenv("KUBERNETES_SERVICE_HOST"))
-
-
 def resolve_evalhub_url(namespace: str = "demo") -> str:
     """Return the EvalHub URL, auto-detecting the best access method.
 
     Priority:
-    1. EVALHUB_URL pointing to an external Route → use directly (workshop participant)
-    2. EVALHUB_URL pointing to svc.cluster.local AND running in-cluster → use directly (Workbench)
-    3. svc.cluster.local but NOT in-cluster → fall through to port-forward
-    4. No URL set → start oc port-forward and return localhost URL
+    1. EVALHUB_URL set to an external Route → use directly
+    2. In-cluster (Workbench) with no URL set → probe svc.cluster.local
+    3. Otherwise → start oc port-forward
     """
+    import httpx
+
     url = os.getenv("EVALHUB_URL", "").rstrip("/")
+
+    # External Route URL — use directly
     if url and "svc.cluster.local" not in url and not url.startswith("https://localhost"):
         print(f"Using external EvalHub URL: {url}")
         return url
-    if url and "svc.cluster.local" in url and _is_in_cluster():
-        print(f"Using in-cluster EvalHub URL: {url}")
-        return url
-    if url and "svc.cluster.local" in url and not _is_in_cluster():
-        print(f"Not running in-cluster — ignoring {url}, trying port-forward...")
+
+    # In-cluster: probe the service URL (may not exist in this cluster)
+    if os.getenv("KUBERNETES_SERVICE_HOST"):
+        cluster_url = f"https://evalhub.{namespace}.svc.cluster.local:8443"
+        try:
+            httpx.get(f"{cluster_url}/api/v1/health", verify=False, timeout=3)
+            print(f"Using in-cluster EvalHub URL: {cluster_url}")
+            return cluster_url
+        except Exception:
+            print(f"EvalHub not found in-cluster at {cluster_url}")
+            if not url:
+                raise RuntimeError(
+                    "EvalHub is not deployed in this cluster.\n"
+                    "If you are a workshop participant, set EVALHUB_URL in Step 0 "
+                    "to the external URL provided by your instructor."
+                )
+
+    # Local: port-forward
     return ensure_evalhub_port_forward(namespace=namespace)
 
 
