@@ -63,21 +63,29 @@ def ensure_evalhub_port_forward(
     )
 
 
+def _is_in_cluster() -> bool:
+    """Check if we're running inside a Kubernetes cluster (e.g. OpenShift Workbench)."""
+    return bool(os.getenv("KUBERNETES_SERVICE_HOST"))
+
+
 def resolve_evalhub_url(namespace: str = "demo") -> str:
-    """Return the EvalHub URL, skipping port-forward when an external URL is configured.
+    """Return the EvalHub URL, auto-detecting the best access method.
 
     Priority:
-    1. EVALHUB_URL env var pointing to an external Route → use directly
-    2. EVALHUB_URL pointing to svc.cluster.local → use directly (in-cluster workbench)
-    3. Otherwise → start oc port-forward and return localhost URL
+    1. EVALHUB_URL pointing to an external Route → use directly (workshop participant)
+    2. EVALHUB_URL pointing to svc.cluster.local AND running in-cluster → use directly (Workbench)
+    3. svc.cluster.local but NOT in-cluster → fall through to port-forward
+    4. No URL set → start oc port-forward and return localhost URL
     """
     url = os.getenv("EVALHUB_URL", "").rstrip("/")
     if url and "svc.cluster.local" not in url and not url.startswith("https://localhost"):
         print(f"Using external EvalHub URL: {url}")
         return url
-    if url and "svc.cluster.local" in url:
+    if url and "svc.cluster.local" in url and _is_in_cluster():
         print(f"Using in-cluster EvalHub URL: {url}")
         return url
+    if url and "svc.cluster.local" in url and not _is_in_cluster():
+        print(f"Not running in-cluster — ignoring {url}, trying port-forward...")
     return ensure_evalhub_port_forward(namespace=namespace)
 
 
