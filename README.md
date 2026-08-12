@@ -107,28 +107,34 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
    cd lm-eval-builder-lab
    ```
 
-2. Install dependencies with [uv](https://docs.astral.sh/uv/):
+2. Install dependencies:
    ```bash
-   uv sync
-   source .venv/bin/activate
+   pip install -q -r requirements.txt
    ```
+   > Or run the install cell in the first notebook (`0_setup/0_model_deploy.ipynb` Step 0).
 
-3. Copy and fill in environment variables:
+3. Copy and configure environment variables:
    ```bash
    cp sample.env .env
-   # Edit .env with your values
    ```
+   Edit `.env` — only **4 values** need to be changed:
+   | Variable | Description |
+   |----------|-------------|
+   | `NAMESPACE` | Your OpenShift AI project name |
+   | `MODEL_NAME` | InferenceService name (= `served_model_name`) |
+   | `BASE_URL` | KServe internal endpoint (see pattern in `sample.env`) |
+   | `HF_TOKEN` | Your Hugging Face API token |
 
 4. Run notebooks in order:
    - `0_setup/0_model_deploy.ipynb` — Deploy model (skip if already deployed)
    - `0_setup/1_LMEval_setup.ipynb` — One-time RBAC and secrets setup for LMEvalJob
-   - `0_setup/2_eval_hub_setup.ipynb` — Deploy EvalHub + MLflow (for Phase 1–2)
+   - `0_setup/2_eval_hub_setup.ipynb` — Deploy EvalHub + MLflow (for Phase 1–3)
    - `1_eval_hub_guidellm_benchmark/1_guidellm_benchmark.ipynb` — Inference performance profiling (TTFT, ITL, throughput)
    - `2_eval_hub_kmcq_benchmark/1_kmcq_benchmark.ipynb` — Single Korean MCQ benchmark evaluation
    - `2_eval_hub_kmcq_benchmark/2_summarize_results.ipynb` — Analyze results and generate Markdown/HTML reports
    - `3_eval_hub_unified_benchmark/1_unified_benchmark.ipynb` — Multi-benchmark + unified accuracy/performance evaluation
 
-> **Note:** `uv sync` creates a `.venv` virtual environment and installs all dependencies defined in `pyproject.toml`. To run scripts directly, use `uv run python <script>` or activate the venv with `source .venv/bin/activate`.
+> **Local development:** If you have [uv](https://docs.astral.sh/uv/) installed, you can use `uv sync` instead for a reproducible virtual environment.
 
 ## Phase Comparison
 
