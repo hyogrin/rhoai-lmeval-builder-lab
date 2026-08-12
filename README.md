@@ -107,25 +107,11 @@ This companion repository tracks performance of models like Gemma, Llama, Phi, Q
    cd lm-eval-builder-lab
    ```
 
-2. Install dependencies:
-   ```bash
-   pip install -q -r requirements.txt
-   ```
-   > Or run the install cell in the first notebook (`0_setup/0_model_deploy.ipynb` Step 0).
+2. Open **`0_setup/2_eval_hub_setup.ipynb`** and run **Step 0**:
+   - Edit the 4 values in the cell (`NAMESPACE`, `MODEL_NAME`, `HF_TOKEN`, `HF_MODEL_ID`) to match your cluster
+   - Run the cell — it creates `.env` and installs all dependencies automatically
 
-3. Copy and configure environment variables:
-   ```bash
-   cp sample.env .env
-   ```
-   Edit `.env` — only **4 values** need to be changed:
-   | Variable | Description |
-   |----------|-------------|
-   | `NAMESPACE` | Your OpenShift AI project name |
-   | `MODEL_NAME` | InferenceService name (= `served_model_name`) |
-   | `BASE_URL` | KServe internal endpoint (see pattern in `sample.env`) |
-   | `HF_TOKEN` | Your Hugging Face API token |
-
-4. Run notebooks in order:
+3. Run notebooks in order:
    - `0_setup/0_model_deploy.ipynb` — Deploy model (skip if already deployed)
    - `0_setup/1_LMEval_setup.ipynb` — One-time RBAC and secrets setup for LMEvalJob
    - `0_setup/2_eval_hub_setup.ipynb` — Deploy EvalHub + MLflow (for Phase 1–3)
